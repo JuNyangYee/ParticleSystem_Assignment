@@ -29,7 +29,7 @@ function setup() {
   cn.parent('p5');
 
   colorMode(HSB);
-  frameRate(10);
+  frameRate(1);
 
   cols = floor(width / scl);
   rows = floor(height / scl);
@@ -58,7 +58,7 @@ class Block {
     this.fillColor = color(random(255), 125, 255);
   }
 
-  update(x, y, block) {
+  update(x, y) {
     this.fillColor = this.colorChange(x, y);
   }
 
@@ -68,36 +68,36 @@ class Block {
     rect(x * scl, y * scl, scl, scl);
   }
   
-  colorChange(x, y,) {
+  colorChange(x, y) {
     // let colorTop, colorBottom, colorLeft, colorRight;
     // let returnColor, colorSet = 0;
 
     this.colorSet = 0;
+    this.tempY = y * scl;
+    this.tempX = x * scl;
 
     if (y < rows-1) {
-      this.c = get(x+3, y+scl+3);
+      this.c = get(this.tempX, this.tempY+scl+5);
       this.colorTop = hue(this.c);
       this.colorSet += this.colorTop;
     }
     if (y > 0) {
-      this.c = get(x+3, y-3);
+      this.c = get(this.tempX, this.tempY-5);
       this.colorBottom = hue(this.c);
       this.colorSet += this.colorBottom;
     }
     if (x > 0) {
-      this.c = get(x-3, y+3);
+      this.c = get(this.tempX-5, this.tempY);
       this.colorLeft = hue(this.c);
       this.colorSet += this.colorLeft;
     }
     if (x < cols-1) {
-      this.c = get(x+scl+5, y+3);
+      this.c = get(this.tempX+scl+5, this.tempY);
       this.colorRight = hue(this.c);
       this.colorSet += this.colorRight;
     }
 
     this.colorSet *= noise(frameCount);
-
-    console.log(this.colorSet);
 
     this.returnColor = color(this.colorSet, 100, 255);
 
