@@ -105,17 +105,31 @@
 //   }
 // }
 
-let img;
+let img = [];
+let count = 0;
 
 function preload() {
-  img = loadImage('image/homepage.png');
+
+  for (let i = 0; i<5; i++) {
+    img[i] = loadImage('image/homepage' + i + '.png');
+  }
 }
 
 function setup() {
-  createCanvas(img.width, img.height);
-  image(img, 0, 0);
+  createCanvas(img[0].width, img[0].height);
+  image(img[0], 0, 0);
 }
 
 function draw() {
-  image(img, 0, 0);
+  image(img[count], 0, 0);
+}
+
+function mousePressed() {
+  count++;
+
+  if (count >= 5) {
+    count = 0;
+  }
+  
+  createCanvas(img[count].width, img[count].height);
 }
